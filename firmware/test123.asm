@@ -1,0 +1,4 @@
+	ADD	AL,7F
+	ADD	AL,01
+	ADD	BL,01
+	END

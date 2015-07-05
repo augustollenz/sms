@@ -1,0 +1,41 @@
+Running: /opt/Xilinx/14.4/ISE_DS/ISE/bin/lin64/unwrapped/fuse work.ram_tb -L unisims -L xilinxcorelib -o ram_tb.exe 
+ISim P.49d (signature 0xfbc00daa)
+Number of CPUs detected in this system: 2
+Turning on mult-threading, number of parallel sub-compilation jobs: 4 
+Starting static elaboration
+Completed static elaboration
+Fuse Memory Usage: 116044 KB
+Fuse CPU Usage: 1950 ms
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling package numeric_std
+Compiling package attributes
+Compiling package std_logic_misc
+Compiling package textio
+Compiling package bmg_tb_pkg
+Compiling package vcomponents
+Compiling architecture behavioral of entity RANDOM [\RANDOM(8,2)\]
+Compiling architecture data_gen_arch of entity DATA_GEN [\DATA_GEN(8,8,1,2)\]
+Compiling architecture checker_arch of entity CHECKER [\CHECKER(8,8)\]
+Compiling architecture behavioral of entity ADDR_GEN [\ADDR_GEN(256,('0','0','0','0','...]
+Compiling architecture register_arch of entity REGISTER_LOGIC_SRAM [register_logic_sram_default]
+Compiling architecture behavioral of entity BMG_STIM_GEN [bmg_stim_gen_default]
+Compiling architecture bufg_v of entity BUFG [bufg_default]
+Compiling package std_logic_textio
+Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output_stage [\BLK_MEM_GEN_V7_3_output_stage("...]
+Compiling architecture softecc_output_reg_stage_behavioral of entity BLK_MEM_GEN_V7_3_softecc_output_reg_stage [\BLK_MEM_GEN_V7_3_softecc_output...]
+Compiling architecture mem_module_behavioral of entity BLK_MEM_GEN_V7_3_mem_module [\BLK_MEM_GEN_V7_3_mem_module("bl...]
+Compiling architecture behavioral of entity BLK_MEM_GEN_V7_3 [\BLK_MEM_GEN_V7_3("blk_mem_gen_v...]
+Compiling architecture ram_a of entity ram [ram_default]
+Compiling architecture xilinx of entity ram_exdes [ram_exdes_default]
+Compiling architecture ram_synth_arch of entity ram_synth [ram_synth_default]
+Compiling architecture ram_tb_arch of entity ram_tb
+Time Resolution for simulation is 1ps.
+Waiting for 22 sub-compilation(s) to finish...
+Compiled 40 VHDL Units
+Built simulation executable ram_tb.exe
+Fuse Memory Usage: 441320 KB
+Fuse CPU Usage: 2400 ms
+GCC CPU Usage: 8730 ms

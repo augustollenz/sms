@@ -1,0 +1,29 @@
+ISim log file
+Running: ./ram_tb.exe -gui -tclbatch simcmds.tcl 
+ISim P.49d (signature 0xfbc00daa)
+WARNING: A WEBPACK license was found.
+WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
+WARNING: ISim will run in Lite mode. Please refer to the ISim documentation for more information on the differences between the Lite and the Full version.
+This is a Lite version of ISim.
+Time resolution is 1 ps
+# wcfg new
+# isim set radix hex
+# wave add /ram_tb/status
+# wave add /ram_tb/ram_synth_inst/BMG_PORT/CLKA
+# wave add /ram_tb/ram_synth_inst/BMG_PORT/ADDRA
+# wave add /ram_tb/ram_synth_inst/BMG_PORT/DINA
+# wave add /ram_tb/ram_synth_inst/BMG_PORT/WEA
+# wave add /ram_tb/ram_synth_inst/BMG_PORT/DOUTA
+# run all
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+at 2100 ns(4): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/ram_tb/ram_synth_inst/BMG_PORT/bmg0/U0/native_mem_module/mem_module/).
+at 116700 ns(4): Note: TEST PASS (/ram_tb/).
+
+** Failure:Test Completed Successfully
+User(VHDL) Code Called Simulation Stop
+In process ram_tb.vhd:109 
+ 
+INFO: Simulator is stopped.
+# quit
+# exit 0
