@@ -15,7 +15,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="21" />
+   <WVObjectSize size="25" />
    <wvobject fp_name="/sms_tb/uut/core0/rst_n" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">rst_n</obj_property>
       <obj_property name="ObjectShortName">rst_n</obj_property>
@@ -29,14 +29,13 @@
       <obj_property name="ObjectShortName">ip[7:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/sms_tb/uut/core0/data_in" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">data_in[7:0]</obj_property>
-      <obj_property name="ObjectShortName">data_in[7:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
    <wvobject fp_name="/sms_tb/uut/core0/core_state" type="other" db_ref_id="1">
       <obj_property name="ElementShortName">core_state</obj_property>
       <obj_property name="ObjectShortName">core_state</obj_property>
+   </wvobject>
+   <wvobject fp_name="/sms_tb/uut/core0/ready" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ready</obj_property>
+      <obj_property name="ObjectShortName">ready</obj_property>
    </wvobject>
    <wvobject fp_name="/sms_tb/uut/core0/instruction" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">instruction[7:0]</obj_property>
@@ -77,9 +76,29 @@
       <obj_property name="ObjectShortName">bus_mux_b[7:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
+   <wvobject fp_name="/sms_tb/uut/core0/mov_mux" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mov_mux[7:0]</obj_property>
+      <obj_property name="ObjectShortName">mov_mux[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/sms_tb/uut/core0/addr_ctrl" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">addr_ctrl[7:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_ctrl[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/sms_tb/uut/core0/addr_exec" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">addr_exec[7:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_exec[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
    <wvobject fp_name="/sms_tb/uut/core0/addr" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">addr[7:0]</obj_property>
       <obj_property name="ObjectShortName">addr[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/sms_tb/uut/core0/data_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_in[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[7:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/sms_tb/uut/core0/data_out" type="array" db_ref_id="1">

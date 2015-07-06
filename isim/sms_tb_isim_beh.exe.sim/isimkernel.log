@@ -1,0 +1,30 @@
+Command line:
+   sms_tb_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  40247
+
+Sun Jul  5 23:18:59 2015
+
+
+ Elaboration Time: 0.04 sec
+
+ Current Memory Usage: 183.8 Meg
+
+ Total Signals          : 264
+ Total Nets             : 2638
+ Total Signal Drivers   : 92
+ Total Blocks           : 22
+ Total Primitive Blocks : 12
+ Total Processes        : 55
+ Total Traceable Variables  : 232
+ Total Scalar Nets and Variables : 4098
+Total Line Count : 424
+Total Line Count : 424
+
+ Total Simulation Time: 0.19 sec
+
+ Current Memory Usage: 259.301 Meg
+
+Sun Jul  5 23:53:38 2015
+

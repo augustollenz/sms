@@ -32,14 +32,21 @@ architecture rtl of sms_core is
 						  state_fetch_b_0,
 						  state_fetch_b_1,
 						  state_execute_0,
-						  state_execute_1);
+						  state_execute_1,
+						  state_execute_2);
 
 	signal core_state : core_state_t;
 	signal rst_internal_n : std_logic := '1';
+	signal ready : std_logic := '0';
 
 	signal instruction : std_logic_vector(7 downto 0);
 	signal operand_a, operand_b : std_logic_vector(7 downto 0);
 	signal bus_a, bus_b, bus_mux_b : std_logic_vector(7 downto 0);
+	signal mov_mux : std_logic_vector(7 downto 0);
+	
+	signal addr_exec : std_logic_vector(7 downto 0);
+	signal addr_ctrl : std_logic_vector(7 downto 0);
+	
 	signal alu_output : std_logic_vector(7 downto 0);
 	signal alu_carry  : std_logic;
 	
@@ -72,68 +79,130 @@ begin
 	bus_b <= operand_b when instruction(4)='1' else
 	         bus_mux_b;
 			 
-	control: process(rst_n, clk)
+	mov_mux <= operand_b when instruction(2 downto 0)="000" else
+	           data_in   when instruction(2 downto 0)="001" or
+			                  instruction(2 downto 0)="011" else
+			   bus_mux_b when instruction(2 downto 0)="010" or
+			                  instruction(2 downto 0)="100";
+
+	data_out <= mov_mux;
+
+	addr_exec <= operand_b when instruction(2 downto 0)="001" else
+	             operand_a when instruction(2 downto 0)="010" else
+				 bus_mux_b when instruction(2 downto 0)="011" else
+				 bus_a     when instruction(2 downto 0)="100";
+
+	addr <= addr_exec when core_state=state_execute_0 or
+                           core_state=state_execute_1 else
+	        addr_ctrl;
+
+	control: process(clk)
 	begin
 		if clk'event and clk='1' then
 			if rst_n='0' or rst_internal_n='0' then
 				core_state <= state_fetch_i_0;
 				IP <= x"01";
-				AL <= x"00";
-				BL <= x"00";
-				CL <= x"00";
-				DL <= x"00";
 				instruction <= x"FF";
 				operand_a <= x"00";
 				operand_b <= x"00";
-				read_n <= '0';
-				addr <= x"01";
+				addr_ctrl <= x"01";
 			else
 				case core_state is
 					when state_fetch_i_0 =>
-						addr <= std_logic_vector(IP);
+						addr_ctrl <= std_logic_vector(IP);
 						IP <= IP + 1;
 						core_state <= state_fetch_i_1;
 					when state_fetch_i_1 =>
 						core_state <= state_fetch_i_2;
 					when state_fetch_i_2 =>
 						instruction <= data_in;
-						addr <= std_logic_vector(IP);
+						addr_ctrl <= std_logic_vector(IP);
 						IP <= IP + 1;
 						core_state <= state_fetch_a_0;
 					when state_fetch_a_0 =>
 						core_state <= state_fetch_a_1;
 					when state_fetch_a_1 =>
 						operand_a <= data_in;
-						addr <= std_logic_vector(IP);
+						addr_ctrl <= std_logic_vector(IP);
 						IP <= IP + 1;
 						core_state <= state_fetch_b_0;
 					when state_fetch_b_0 =>
 						core_state <= state_fetch_b_1;
 					when state_fetch_b_1 =>
 						operand_b <= data_in;
-						addr <= std_logic_vector(IP);
+						addr_ctrl <= std_logic_vector(IP);
 						IP <= IP + 1;
 						core_state <= state_execute_0;
 					when state_execute_0 =>
 						core_state <= state_execute_1;
 					when state_execute_1 =>
-						SR(1) <= alu_carry;
-						case operand_a is
-							when x"00" =>
-								AL <= alu_output;
-							when x"01" =>
-								BL <= alu_output;
-							when x"02" =>
-								CL <= alu_output;
-							when x"03" =>
-								DL <= alu_output;
-							when others =>
-								AL <= alu_output;
-						end case;
-						core_state <= state_fetch_i_2;
+						if ready='1' then
+							core_state <= state_execute_2;
+						end if;
+					-- esse ciclo deveria ser no exec process
+					-- na instrucao mov com memoria
+					when state_execute_2 =>
+						core_state <= state_fetch_i_1;
 					when others =>
 						rst_internal_n <= '0';
 				end case;
+			end if;
+		end if;
+	end process;
+	
+	execute: process(clk)
+	begin
+		if clk'event and clk='1' then
+			if rst_n='0' or rst_internal_n='0' then
+				ready <= '0';
+				read_n <= '0';
+				AL <= x"00";
+				BL <= x"00";
+				CL <= x"00";
+				DL <= x"00";				
+			elsif core_state=state_execute_1 then
+				if instruction(7 downto 4)=x"A" or
+				   instruction(7 downto 4)=x"B" then
+					SR(1) <= alu_carry;
+					case operand_a is
+						when x"00" =>
+							AL <= alu_output;
+						when x"01" =>
+							BL <= alu_output;
+						when x"02" =>
+							CL <= alu_output;
+						when x"03" =>
+							DL <= alu_output;
+						when others =>
+							AL <= alu_output;
+					end case;
+					ready <= '1';
+				-- MOV
+				elsif instruction(7 downto 4)=x"D" then
+					if instruction(2 downto 0)="000" or
+					   instruction(2 downto 0)="001" or
+					   instruction(2 downto 0)="011" then
+						case operand_a(1 downto 0) is
+							when "00" =>
+								AL <= mov_mux;
+							when "01" =>
+								BL <= mov_mux;
+							when "10" =>
+								CL <= mov_mux;
+							when others =>
+								DL <= mov_mux;							
+						end case;
+					elsif instruction(2 downto 0)="010" or
+					      instruction(2 downto 0)="100" then
+						read_n <= '1';
+					end if;
+					ready <= '1';
+				else
+					ready <= '0';
+				end if;
+			else--not executig
+				ready <= '0';
+				read_n <= '0';
 			end if;
 		end if;
 	end process;
