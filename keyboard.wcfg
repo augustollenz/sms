@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/augusto/Dropbox/Projeto_Sistemas_Digitais/sms/keyboard_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="keyboard_tb" />
+            <top_module name="std_logic_1164" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="8" />
+   <wvobject fp_name="/keyboard_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/keyboard_tb/rst_n" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/keyboard_tb/req" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">req</obj_property>
+      <obj_property name="ObjectShortName">req</obj_property>
+   </wvobject>
+   <wvobject fp_name="/keyboard_tb/tclk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">tclk</obj_property>
+      <obj_property name="ObjectShortName">tclk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/keyboard_tb/tdata" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">tdata</obj_property>
+      <obj_property name="ObjectShortName">tdata</obj_property>
+   </wvobject>
+   <wvobject fp_name="/keyboard_tb/ack" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ack</obj_property>
+      <obj_property name="ObjectShortName">ack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/keyboard_tb/key" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">key[15:0]</obj_property>
+      <obj_property name="ObjectShortName">key[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/keyboard_tb/uut/state" type="other" db_ref_id="1">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+      <obj_property name="label">state</obj_property>
+   </wvobject>
+</wave_config>

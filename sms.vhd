@@ -7,9 +7,9 @@ entity sms is
 end sms;
 
 architecture rtl of sms is
-	component sms_core
+        component sms_core
 		port (
-			rst_n : in  STD_LOGIC;
+	   rst_n : in  STD_LOGIC;
            clk : in  STD_LOGIC;
            addr : out  STD_LOGIC_VECTOR (7 downto 0);
            data_in : in  STD_LOGIC_VECTOR (7 downto 0);
@@ -27,12 +27,27 @@ architecture rtl of sms is
 		douta : out std_logic_vector(7 downto 0)
 	  );
 	end component ram;
+
+	component keyboard
+	    port (
+			clk   : in  std_logic;
+			rst_n : in  std_logic;
+			req   : in  std_logic;
+			ack   : out  std_logic;
+	        tclk  : inout std_logic;
+            tdata : inout std_logic;
+		    key   : out   std_logic_vector(15 downto 0)
+		);
+	end component keyboard;
 	
 	signal read_n   : std_logic_vector(0 downto 0);
 	signal addr     : std_logic_vector(7 downto 0);
 	signal data_in  : std_logic_vector(7 downto 0);
 	signal data_out : std_logic_vector(7 downto 0);
 	
+	signal key_req : std_logic;
+	signal key_ack : std_logic;
+
 begin
 core0: sms_core
 	port map (
@@ -50,5 +65,12 @@ ram0: ram
 		addra => addr,
 		dina => data_out,
 		douta => data_in
+	);
+keyboard0: keyboard
+	port map (
+		rst_n => rst_n,
+		clk => clk,
+		req => key_req,
+		ack => key_ack
 	);
 end rtl;
