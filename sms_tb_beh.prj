@@ -1,5 +1,0 @@
-vhdl work "ula.vhd"
-vhdl work "sms_core.vhd"
-vhdl work "ipcore_dir/ram.vhd"
-vhdl work "sms.vhd"
-vhdl work "sms_tb.vhd"
