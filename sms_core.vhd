@@ -102,8 +102,8 @@ begin
 		if clk'event and clk='1' then
 			if rst_n='0' or rst_internal_n='0' then
 				core_state <= state_fetch_i_0;
-				addr_ctrl <= x"01";
-				IP <= x"01";
+				addr_ctrl <= x"00";
+				IP <= x"00";
 				instruction <= x"FF";
 				operand_a <= x"00";
 				operand_b <= x"00";

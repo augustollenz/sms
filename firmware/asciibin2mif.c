@@ -27,8 +27,6 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    fprintf(output, "%s\n", "00000000");
-
     while (!feof(input)) {
         int i;
         unsigned int byte;
