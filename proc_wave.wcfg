@@ -57,14 +57,14 @@
       <obj_property name="ObjectShortName">bus_a[7:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="CustomSignalColor">#0000ff</obj_property>
+      <obj_property name="CustomSignalColor">#008000</obj_property>
    </wvobject>
    <wvobject fp_name="/sms_tb/uut/core0/bus_b" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">bus_b[7:0]</obj_property>
       <obj_property name="ObjectShortName">bus_b[7:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="CustomSignalColor">#0000ff</obj_property>
+      <obj_property name="CustomSignalColor">#008000</obj_property>
    </wvobject>
    <wvobject fp_name="/sms_tb/uut/core0/alu_output" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">alu_output[7:0]</obj_property>

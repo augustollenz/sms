@@ -41,6 +41,7 @@ architecture rtl of sms is
 	end component keyboard;
 	
 	signal read_n   : std_logic_vector(0 downto 0);
+	signal read_nr  : std_logic_vector(0 downto 0);
 	signal addr     : std_logic_vector(7 downto 0);
 	signal data_in  : std_logic_vector(7 downto 0);
 	signal data_out : std_logic_vector(7 downto 0);
@@ -58,10 +59,12 @@ core0: sms_core
 		data_out => data_out,
 		read_n => read_n(0)
 	);
+
+    read_nr <= read_n when rst_n='1' else "0";
 ram0: ram
 	port map (
 		clka => clk,
-		wea => read_n,
+		wea => read_nr,
 		addra => addr,
 		dina => data_out,
 		douta => data_in

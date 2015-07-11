@@ -1,1 +1,0 @@
--intstyle "ise" -incremental -o "/home/augusto/Dropbox/Projeto_Sistemas_Digitais/sms/sms_tb_isim_beh.exe" -prj "/home/augusto/Dropbox/Projeto_Sistemas_Digitais/sms/sms_tb_beh.prj" "work.sms_tb" 

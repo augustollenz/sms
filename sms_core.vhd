@@ -93,7 +93,8 @@ begin
 				 bus_a     when instruction(2 downto 0)="100";
 
 	addr <= addr_exec when core_state=state_execute_0 or
-                           core_state=state_execute_1 else
+                           core_state=state_execute_1 or
+						   core_state=state_execute_2 else
 	        addr_ctrl;
 
 	control: process(clk)
@@ -101,11 +102,11 @@ begin
 		if clk'event and clk='1' then
 			if rst_n='0' or rst_internal_n='0' then
 				core_state <= state_fetch_i_0;
+				addr_ctrl <= x"01";
 				IP <= x"01";
 				instruction <= x"FF";
 				operand_a <= x"00";
 				operand_b <= x"00";
-				addr_ctrl <= x"01";
 			else
 				case core_state is
 					when state_fetch_i_0 =>
@@ -201,8 +202,8 @@ begin
 					ready <= '0';
 				end if;
 			else--not executig
-				ready <= '0';
 				read_n <= '0';
+				ready <= '0';
 			end if;
 		end if;
 	end process;
