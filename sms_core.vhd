@@ -54,6 +54,27 @@ architecture rtl of sms_core is
 	signal IP : unsigned(7 downto 0);
 	signal SR : std_logic_vector(7 downto 0);
 
+	type num_operands_array is array(0 to 255) of integer range 0 to 2;
+	constant num_operands : num_operands_array := (
+	--  0 1 2 3 4 5 6 7 8 9 A B C D E F
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -- 0
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -- 1
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -- 2
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -- 3
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -- 4
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -- 5
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -- 6
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -- 7
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -- 8
+		0,0,0,0,0,0,0,0,0,0,2,2,2,2,0,0, -- 9
+		2,2,2,2,1,1,2,0,0,0,2,2,2,1,0,0, -- A
+		2,2,2,2,0,0,2,0,0,0,2,2,2,0,0,0, -- B
+		1,1,1,1,1,1,1,0,0,0,1,0,1,0,0,0, -- C
+		2,2,2,2,2,0,0,0,0,0,2,2,2,0,0,0, -- D
+		1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0, -- E
+		1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0  -- F
+	);
+
 begin
 	ula0: ula
 		port map (
@@ -117,16 +138,24 @@ begin
 						core_state <= state_fetch_i_2;
 					when state_fetch_i_2 =>
 						instruction <= data_in;
-						addr_ctrl <= std_logic_vector(IP);
-						IP <= IP + 1;
-						core_state <= state_fetch_a_0;
+						if num_operands(to_integer(unsigned(data_in)))/=0 then
+							core_state <= state_fetch_a_0;
+							addr_ctrl <= std_logic_vector(IP);
+							IP <= IP + 1;
+						else
+							core_state <= state_execute_0;
+						end if;
 					when state_fetch_a_0 =>
 						core_state <= state_fetch_a_1;
 					when state_fetch_a_1 =>
 						operand_a <= data_in;
-						addr_ctrl <= std_logic_vector(IP);
-						IP <= IP + 1;
-						core_state <= state_fetch_b_0;
+						if num_operands(to_integer(unsigned(instruction)))/=0 then
+							addr_ctrl <= std_logic_vector(IP);
+							IP <= IP + 1;
+							core_state <= state_fetch_b_0;
+						else
+							core_state <= state_execute_0;
+						end if;
 					when state_fetch_b_0 =>
 						core_state <= state_fetch_b_1;
 					when state_fetch_b_1 =>
