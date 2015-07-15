@@ -24,11 +24,6 @@
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/sms_tb/uut/core0/ip" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">ip[7:0]</obj_property>
-      <obj_property name="ObjectShortName">ip[7:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
    <wvobject fp_name="/sms_tb/uut/core0/core_state" type="other" db_ref_id="1">
       <obj_property name="ElementShortName">core_state</obj_property>
       <obj_property name="ObjectShortName">core_state</obj_property>
@@ -113,6 +108,13 @@
    <wvobject fp_name="/sms_tb/uut/core0/rst_internal_n" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">rst_internal_n</obj_property>
       <obj_property name="ObjectShortName">rst_internal_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/sms_tb/uut/core0/ip" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ip[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ip[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ffff00</obj_property>
    </wvobject>
    <wvobject fp_name="/sms_tb/uut/core0/al" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">al[7:0]</obj_property>

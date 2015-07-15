@@ -1,5 +1,8 @@
 library ieee;
 use ieee.std_logic_1164.all;
+--use ieee.std_logic_arith.all;
+--use ieee.std_logic_signed.all;
+--use ieee.std_logic_unsigned.all;
 use ieee.numeric_std.all;
 
 entity sms_core is
@@ -53,7 +56,11 @@ architecture rtl of sms_core is
 	
 	signal AL, BL, CL, DL : std_logic_vector(7 downto 0);
 	signal IP : unsigned(7 downto 0);
+	
 	signal SR : std_logic_vector(7 downto 0);
+	constant Z : integer := 0;
+	constant S : integer := 1;
+	constant O : integer := 2;
 
 	type num_operands_array is array(0 to 255) of integer range 0 to 2;
 	constant num_operands : num_operands_array := (
@@ -160,14 +167,55 @@ begin
 					when state_fetch_b_0 =>
 						core_state <= state_fetch_b_1;
 					when state_fetch_b_1 =>
-						operand_b <= data_in;
-						addr_ctrl <= std_logic_vector(IP);
 						IP <= IP + 1;
+						addr_ctrl <= std_logic_vector(IP);
+						operand_b <= data_in;
 						core_state <= state_execute_0;
 					when state_execute_0 =>
 						core_state <= state_execute_1;
 					when state_execute_1 =>
-						if ready='1' then
+						-- JMPs
+						if instruction(7 downto 4)=x"C" then
+							case instruction(3 downto 0) is
+								-- JMP
+								when x"0" =>
+									IP <= IP - not(unsigned(operand_a) - 6) + 1;
+								-- JZ
+								when x"1" =>
+									if SR(Z)='1' then
+										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+									end if;
+								-- JNZ
+								when x"2" =>
+									if SR(Z)='0' then
+										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+									end if;
+								-- JS
+								when x"3" =>
+									if SR(S)='1' then
+										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+									end if;
+								-- JNS
+								when x"4" =>
+									if SR(S)='0' then
+										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+									end if;
+								-- JO
+								when x"5" =>
+									if SR(O)='1' then
+										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+									end if;
+								-- JNO
+								when x"6" =>
+									if SR(O)='0' then
+										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+									end if;
+								when others =>
+									--invalid_instruction <= '1';
+							end case;
+							core_state <= state_fetch_i_0;
+							addr_ctrl <= std_logic_vector(IP);
+						elsif ready='1' then
 							core_state <= state_execute_2;
 						end if;
 					-- esse ciclo deveria ser no exec process
@@ -194,7 +242,13 @@ begin
 			elsif core_state=state_execute_1 then
 				if instruction(7 downto 4)=x"A" or
 				   instruction(7 downto 4)=x"B" then
-					SR(1) <= alu_carry;
+					if alu_output=x"00" then
+						SR(Z) <= '1';
+					else
+						SR(Z) <= '0';
+					end if;
+					SR(O) <= alu_carry;
+					SR(S) <= alu_output(7);
 					case operand_a is
 						when x"00" =>
 							AL <= alu_output;
@@ -207,6 +261,9 @@ begin
 						when others =>
 							AL <= alu_output;
 					end case;
+					ready <= '1';
+				-- JMP
+				elsif instruction(7 downto 4)=x"C" then
 					ready <= '1';
 				-- MOV
 				elsif instruction(7 downto 4)=x"D" then
