@@ -8,7 +8,8 @@ entity sms_core is
            addr     : out std_logic_vector(7 downto 0);
            data_in  : in  std_logic_vector(7 downto 0);
            data_out : out std_logic_vector(7 downto 0);
-           read_n   : out std_logic);
+           read_n   : out std_logic;
+		   input    : in std_logic_vector(7 downto 0));
 end sms_core;
 
 architecture rtl of sms_core is
@@ -227,6 +228,13 @@ begin
 						read_n <= '1';
 					end if;
 					ready <= '1';
+				elsif instruction(7 downto 4)=x"F" then
+					case instruction(3 downto 0) is
+						when x"0" =>
+							AL <= input;
+						when others =>
+							AL <= x"00";
+					end case;
 				else
 					ready <= '0';
 				end if;

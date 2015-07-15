@@ -15,7 +15,9 @@ ARCHITECTURE behavior OF sms_tb IS
     COMPONENT sms
     PORT(
          rst_n : IN  std_logic;
-         clk : IN  std_logic
+         clk : IN  std_logic;
+		 ps2_clk  : inout STD_LOGIC;
+		 ps2_data : inout STD_LOGIC
         );
     END COMPONENT;
     
@@ -23,6 +25,10 @@ ARCHITECTURE behavior OF sms_tb IS
    --Inputs
    signal rst_n : std_logic := '0';
    signal clk : std_logic := '0';
+   
+   --PS2 signals
+   signal ps2_clk  : std_logic;
+   signal ps2_data : std_logic;
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -32,7 +38,9 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: sms PORT MAP (
           rst_n => rst_n,
-          clk => clk
+          clk   => clk,
+		  ps2_clk  => ps2_clk,
+		  ps2_data => ps2_data
         );
 
    -- Clock process definitions

@@ -3,7 +3,10 @@ use ieee.std_logic_1164.all;
 
 entity sms is
     port ( rst_n : in STD_LOGIC;
-           clk   : in STD_LOGIC);
+           clk   : in STD_LOGIC;
+		   ps2_clk  : inout STD_LOGIC;
+		   ps2_data : inout STD_LOGIC
+		   );
 end sms;
 
 architecture rtl of sms is
@@ -14,7 +17,8 @@ architecture rtl of sms is
            addr : out  STD_LOGIC_VECTOR (7 downto 0);
            data_in : in  STD_LOGIC_VECTOR (7 downto 0);
            data_out : out  STD_LOGIC_VECTOR (7 downto 0);
-           read_n : out  STD_LOGIC
+           read_n : out  STD_LOGIC;
+		   input : in std_logic_vector(7 downto 0)
 		   );
 	end component sms_core;
 	
@@ -46,8 +50,9 @@ architecture rtl of sms is
 	signal data_in  : std_logic_vector(7 downto 0);
 	signal data_out : std_logic_vector(7 downto 0);
 	
-	signal key_req : std_logic;
-	signal key_ack : std_logic;
+	signal key_req  : std_logic;
+	signal key_ack  : std_logic;
+	signal key_data : std_logic_vector(15 downto 0);
 
 begin
 core0: sms_core
@@ -57,7 +62,8 @@ core0: sms_core
 		addr => addr,
 		data_in => data_in,
 		data_out => data_out,
-		read_n => read_n(0)
+		read_n => read_n(0),
+		input => key_data(15 downto 8)
 	);
 
     read_nr <= read_n when rst_n='1' else "0";
@@ -74,6 +80,7 @@ keyboard0: keyboard
 		rst_n => rst_n,
 		clk => clk,
 		req => key_req,
-		ack => key_ack
+		ack => key_ack,
+		key => key_data
 	);
 end rtl;
