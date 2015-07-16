@@ -179,36 +179,78 @@ begin
 							case instruction(3 downto 0) is
 								-- JMP
 								when x"0" =>
-									IP <= IP - not(unsigned(operand_a) - 6) + 1;
+									if operand_a(7)='1' then
+										IP <= IP
+										   - not(unsigned(operand_a) - 6)
+										   + 1;
+									else
+										IP <= IP + unsigned(operand_a);
+									end if;
 								-- JZ
 								when x"1" =>
 									if SR(Z)='1' then
-										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+										if operand_a(7)='1' then
+											IP <= IP
+											   - not(unsigned(operand_a) - 6)
+											   + 1;
+										else
+											IP <= IP + unsigned(operand_a);
+										end if;
 									end if;
 								-- JNZ
 								when x"2" =>
 									if SR(Z)='0' then
-										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+										if operand_a(7)='1' then
+											IP <= IP
+											   - not(unsigned(operand_a) - 6)
+											   + 1;
+										else
+											IP <= IP + unsigned(operand_a);
+										end if;
 									end if;
 								-- JS
 								when x"3" =>
 									if SR(S)='1' then
-										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+										if operand_a(7)='1' then
+											IP <= IP
+											   - not(unsigned(operand_a) - 6)
+											   + 1;
+										else
+											IP <= IP + unsigned(operand_a);
+										end if;
 									end if;
 								-- JNS
 								when x"4" =>
 									if SR(S)='0' then
-										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+										if operand_a(7)='1' then
+											IP <= IP
+											   - not(unsigned(operand_a) - 6)
+											   + 1;
+										else
+											IP <= IP + unsigned(operand_a);
+										end if;
 									end if;
 								-- JO
 								when x"5" =>
 									if SR(O)='1' then
-										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+										if operand_a(7)='1' then
+											IP <= IP
+											   - not(unsigned(operand_a) - 6)
+											   + 1;
+										else
+											IP <= IP + unsigned(operand_a);
+										end if;
 									end if;
 								-- JNO
 								when x"6" =>
 									if SR(O)='0' then
-										IP <= IP - not(unsigned(operand_a) - 6) + 1;
+										if operand_a(7)='1' then
+											IP <= IP
+											   - not(unsigned(operand_a) - 6)
+											   + 1;
+										else
+											IP <= IP + unsigned(operand_a);
+										end if;
 									end if;
 								when others =>
 									--invalid_instruction <= '1';
